@@ -1,0 +1,78 @@
+buildscript {
+    repositories {
+        maven { url "https://files.minecraftforge.net/maven" }
+        maven { url "https://repo.spongepowered.org/maven" }
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: "net.minecraftforge.gradle", name: "ForgeGradle", version: "3.+", changing: true
+        classpath "org.spongepowered:mixingradle:0.7-SNAPSHOT"
+    }
+}
+
+def mcVersion = project.mc_version
+def username = project.username
+def password = project.password
+
+apply plugin: "net.minecraftforge.gradle"
+apply plugin: "org.spongepowered.mixin"
+apply plugin: "eclipse"
+
+version = project.version
+group = "com.stevekung.pufferbee"
+archivesBaseName = "Pufferbee"
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = 1.8
+println("Java: " + System.getProperty("java.version") + " JVM: " + System.getProperty("java.vm.version") + "(" + System.getProperty("java.vendor") + ") Arch: " + System.getProperty("os.arch"))
+
+minecraft {
+    mappings channel: "snapshot", version: "${mcp_mapping}"
+    accessTransformer file("src/main/resources/META-INF/accesstransformer.cfg")
+
+    runs {
+        client {
+            workingDirectory project.file("run")
+            source sourceSets.main
+            args "--mixin", "mixins.pufferbee.json", "--username", username, "--password", password
+            jvmArgs "-Dmixin.debug.export=true"
+        }
+        server {
+            workingDirectory project.file("run")
+            source sourceSets.main
+            args "--mixin", "mixins.pufferbee.json"
+            jvmArgs "-Dmixin.debug.export=true"
+        }
+        data {
+            workingDirectory project.file("run")
+            args "--mod", "pufferbee", "--all", "--output", file("src/generated/resources/"), "--existing", file("src/main/resources/")
+            source sourceSets.main
+        }
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${forge_version}"
+    compile files("libs/SteveKunG's-Lib-${mc_version}-${stevekung_lib_version}-deobf.jar")
+}
+
+processResources {
+    exclude ".cache"
+}
+
+sourceSets {
+    main {
+        ext.refMap = "mixins.pufferbee.refmap.json"
+
+        resources {
+            srcDirs = ["src/main/resources/", "src/generated/resources/"]
+        }
+    }
+}
+
+jar {
+    manifest {
+        attributes("MixinConnector": "com.stevekung.pufferbee.PufferbeeMixinConnector"
+        )
+    }
+    baseName = "Pufferbee-" + mcVersion
+}

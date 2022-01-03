@@ -1,0 +1,26 @@
+{
+    "required": true,
+    "minVersion": "0.8.2",
+    "compatibilityLevel": "JAVA_8",
+    "package": "com.stevekung.pufferbee.mixin",
+    "refmap": "mixins.pufferbee.refmap.json",
+    "target": "@env(DEFAULT)",
+    "mixins": [
+    	"MixinFishBucketItem",
+    	"MixinHoneyBottleItem",
+    	"MixinBeehiveBlock",
+    	"MixinLivingEntity",
+    	"MixinGoalSelector",
+    	"MixinPufferfishEntity",
+    	"MixinMobEntity",
+    	"MixinBeeEntity",
+    	"MixinBeehiveTreeDecorator",
+    	"MixinBeehiveTileEntity"
+    ],
+    "client": [
+    	"client.MixinBeeModel"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}

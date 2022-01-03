@@ -1,0 +1,31 @@
+modLoader="javafml"
+loaderVersion="[34,)"
+license="All rights reserved"
+
+[[mods]]
+modId="pufferbee"
+version="1.0.0"
+displayName="Pufferbee"
+description="For contents!"
+authors="SteveKunG"
+
+[[dependencies.pufferbee]]
+    modId="forge"
+    mandatory=true
+    versionRange="[34,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.pufferbee]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.3,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.pufferbee]]
+    modId="stevekungs_lib"
+    mandatory=true
+    versionRange="[4.0.0,)"
+    ordering="NONE"
+    side="BOTH"
